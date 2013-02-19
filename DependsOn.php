@@ -32,7 +32,7 @@ function DependsOnExtensionRenderParserFunction( $parser, $groupId, $artifactId)
 	$dependsOn = DependsOnGetFile( $groupId, $artifactId,"dependsOn");
 	$dependsOnThis = DependsOnGetFile($groupId, $artifactId,"dependsOnThis");
 	if ($dependsOn != '' || $dependsOnThis != ''){
-		$output=  "\n{|\n|" . $dependsOn ."\n|". $dependsOnThis ."\n|}\n";
+		$output=  "\n{|\n|" . $dependsOn ."\n|". $dependsOnThis ."\n|}";
 		return array($output, 'noparse' => false);
 	}
 	return "";
