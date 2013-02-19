@@ -29,14 +29,14 @@ function DependsOnSetupParserFunction( &$parser ) {
 }
 
 function DependsOnExtensionRenderParserFunction( $parser, $groupId, $artifactId) {
-	global $wgDependsOnRootDirectory;
-	$fileRoot = $wgDependsOnRootDirectory .  str_replace(".", "/", $groupId) . "/" . $artifactId ;
-	$dependsOn = DependsOnGetFile($fileRoot, "dependsOn");
-	$dependsOnThis = DependsOnGetFile($fileRoot, "dependsOnThis");
+	$dependsOn = DependsOnGetFile( $groupId, $artifactId,"dependsOn");
+	$dependsOnThis = DependsOnGetFile($groupId, $artifactId,"dependsOnThis");
 	return $dependsOn . $dependsOnThis;
 }
 
-function DependsOnGetFile($fileRoot, $extension){
+function DependsOnGetFile($groupId, $artifactId, $extension){
+	global $wgDependsOnRootDirectory;
+	$fileRoot = $wgDependsOnRootDirectory .  str_replace(".", "/", $groupId) . "/" . $artifactId ;
 	$fileName = $fileRoot . "/" . $extension;
 	if (file_exists($fileName)){
 		$dependsOnText = file_get_contents($fileName);
