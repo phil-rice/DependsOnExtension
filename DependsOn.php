@@ -31,8 +31,11 @@ function DependsOnSetupParserFunction( &$parser ) {
 function DependsOnExtensionRenderParserFunction( $parser, $groupId, $artifactId) {
 	$dependsOn = DependsOnGetFile( $groupId, $artifactId,"dependsOn");
 	$dependsOnThis = DependsOnGetFile($groupId, $artifactId,"dependsOnThis");
-	$output=  $dependsOn . $dependsOnThis;
-	return array($output, 'noparse' => false);
+	if ($dependsOn != '' || $dependsOnThis != ''){
+		$output=  "\n{|\n|" . $dependsOn ."\n|". $dependsOnThis ."\n|}\n";
+		return array($output, 'noparse' => false);
+	}
+	return "nofile";
 }
 
 function DependsOnGetFile($groupId, $artifactId, $extension){
@@ -41,7 +44,7 @@ function DependsOnGetFile($groupId, $artifactId, $extension){
 	$fileName = $fileRoot . "/" . $extension;
 	if (file_exists($fileName)){
 		$dependsOnText = file_get_contents($fileName);
-	#	$output = "id : [" . $groupId . ":" . $artifactId . "] root = [" . $wgDependsOnRootDirectory . " filename = " . $fileName ."<br />" . $dependsOnText;
+		#	$output = "id : [" . $groupId . ":" . $artifactId . "] root = [" . $wgDependsOnRootDirectory . " filename = " . $fileName ."<br />" . $dependsOnText;
 		return $dependsOnText;
 	}
 	return "";
