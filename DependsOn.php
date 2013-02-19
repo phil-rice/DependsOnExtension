@@ -35,7 +35,7 @@ function DependsOnExtensionRenderParserFunction( $parser, $groupId, $artifactId)
 		$output=  "\n{|\n|" . $dependsOn ."\n|". $dependsOnThis ."\n|}\n";
 		return array($output, 'noparse' => false);
 	}
-	return "nofile";
+	return "";
 }
 
 function DependsOnGetFile($groupId, $artifactId, $extension){
