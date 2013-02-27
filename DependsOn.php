@@ -28,25 +28,27 @@ function DependsOnSetupParserFunction( &$parser ) {
 	return true;
 }
 
-function DependsOnExtensionRenderParserFunction( $parser, $groupId, $artifactId) {
-	$dependsOn = DependsOnGetFile( $groupId, $artifactId,"dependsOn");
-	$dependsOnThis = DependsOnGetFile($groupId, $artifactId,"dependsOnThis");
-	if ($dependsOn != '' || $dependsOnThis != ''){
-		$output=  "\n{|\n|" . $dependsOn ."\n|". $dependsOnThis ."\n|}";
-		return array($output, 'noparse' => false);
-	}
-	return "";
-}
-
-function DependsOnGetFile($groupId, $artifactId, $extension){
-	global $wgDependsOnRootDirectory;
+function DependsOnExtensionRenderParserFunction( $parser, $groupId, $artifactId, $extension) {
+    global $wgDependsOnRootDirectory;
 	$fileRoot = $wgDependsOnRootDirectory .  str_replace(".", "/", $groupId) . "/" . $artifactId ;
 	$fileName = $fileRoot . "/" . $extension;
 	if (file_exists($fileName)){
 		$dependsOnText = file_get_contents($fileName);
 		#	$output = "id : [" . $groupId . ":" . $artifactId . "] root = [" . $wgDependsOnRootDirectory . " filename = " . $fileName ."<br />" . $dependsOnText;
-		return $dependsOnText;
+		return array($dependsOnText, 'noparse' => false)$;
 	}
 	return "";
-
 }
+
+#function DependsOnGetFile($groupId, $artifactId, $extension){
+#	global $wgDependsOnRootDirectory;
+#	$fileRoot = $wgDependsOnRootDirectory .  str_replace(".", "/", $groupId) . "/" . $artifactId ;
+#	$fileName = $fileRoot . "/" . $extension;
+#	if (file_exists($fileName)){
+#		$dependsOnText = file_get_contents($fileName);
+#		#	$output = "id : [" . $groupId . ":" . $artifactId . "] root = [" . $wgDependsOnRootDirectory . " filename = " . $fileName .#"<br />" . $dependsOnText;
+#		return $dependsOnText;
+#	}
+#	return "";
+#
+#}
